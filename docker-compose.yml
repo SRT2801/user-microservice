@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password --skip-mysqlx
+    environment:
+      MYSQL_ROOT_PASSWORD: Sahir123
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Sahir123
+    ports:
+      - "33060:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:

@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 33060,
+  "username": "root",
+  "password": "Sahir123",
+  "database": "user_db",
+  "synchronize": true,
+  "logging": false,
+  "entities": ["src/domain/entities/**/*.ts"],
+  "migrations": ["src/infrastructure/persistence/typeorm/migrations/**/*.ts"],
+  "subscribers": ["src/infrastructure/persistence/typeorm/subscribers/**/*.ts"]
+}
