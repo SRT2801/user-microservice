@@ -10,7 +10,7 @@ import { inject } from "inversify";
 import { IUserUseCase } from "../../../domain/use-cases/IUserUseCase";
 import { CreateUserDto } from "../dtos/CreateUserDto";
 import { TYPES } from "../../inversify/di/types";
-import { Types } from "mysql2";
+
 
 @controller("/users")
 export class UserController {
