@@ -1,5 +1,5 @@
 export const ENVIROMENTS = {
-  SERVER_PORT: Number(process.env.SERVER_PORT) || 3000,
+  SERVER_PORT: Number(process.env.SERVER_PORT),
   DB_HOST: process.env.DB_HOST,
   DB_PORT: Number(process.env.DB_PORT) ,
   DB_USERNAME: process.env.DB_USERNAME ,
