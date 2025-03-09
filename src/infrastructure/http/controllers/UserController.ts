@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   controller,
   httpGet,
+  httpPatch,
   httpPost,
   request,
   response,
@@ -10,6 +11,7 @@ import { inject } from "inversify";
 import { IUserUseCase } from "../../../domain/use-cases/IUserUseCase";
 import { CreateUserDto } from "../dtos/CreateUserDto";
 import { TYPES } from "../../inversify/di/types";
+import { UpdateUserDto } from "../dtos/UpdateUserDto";
 
 
 @controller("/users")
@@ -80,6 +82,29 @@ export class UserController {
       return res
         .status(500)
         .json({ message: "Error al crear el usuario", error });
+    }
+  }
+
+  @httpPatch("/:id", TYPES.AuthMiddleware)
+  async updateUser(@request() req: Request, @response() res: Response) {
+    try {
+      const id = parseInt(req.params.id);
+      const updateUserDto: UpdateUserDto = req.body;
+      
+      const updatedUser = await this.userUseCase.updateUser(id, updateUserDto);
+      
+      if (!updatedUser) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      
+      return res.status(200).json(updatedUser);
+    } catch (error: any) {
+      if (error.message.includes("email")) {
+        return res.status(400).json({ message: error.message });
+      }
+      return res
+        .status(500)
+        .json({ message: "Error al actualizar el usuario", error });
     }
   }
 

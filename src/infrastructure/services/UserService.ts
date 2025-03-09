@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
 import { IUserRepository } from "../../domain/repositories/IUserRepository";
 import { IUserService } from "../../domain/services/IUserService";
-import { IUser, IUserCreate } from "../../domain/entities/IUser";
+import { IUser, IUserCreate, IUserUpdate } from "../../domain/entities/IUser";
 import { BcryptAdapter } from "../http/utils/bcrypt/bcrypt";
 import { TYPES } from "../inversify/di/types";
 
@@ -30,6 +30,23 @@ export class UserService implements IUserService {
 
     const { password, ...userWithoutPassword } = savedUser;
 
+    return userWithoutPassword;
+  }
+
+  async updateUser(id: number, userData: IUserUpdate): Promise<Omit<IUser, "password"> | null> {
+   
+    if (userData.password) {
+      userData.password = await this.bcryptAdapter.hash(userData.password);
+    }
+    
+    const updatedUser = await this.userRepository.update(id, userData);
+    
+    if (!updatedUser) {
+      return null;
+    }
+    
+   
+    const { password, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword;
   }
 

@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { Repository, DataSource } from "typeorm";
 import { User } from "../entities/User";
 import { IUserRepository } from "../../../../domain/repositories/IUserRepository";
-import { IUser, IUserCreate } from "../../../../domain/entities/IUser";
+import { IUser, IUserCreate, IUserUpdate } from "../../../../domain/entities/IUser";
 import { TYPES } from "../../../inversify/di/types";
 
 @injectable()
@@ -19,6 +19,15 @@ export class UserRepository implements IUserRepository {
   async getAll(): Promise<IUser[]> {
     const users = await this.repository.find();
     return users as IUser[]; 
+  }
+
+  async update(id: number, userData: IUserUpdate): Promise<IUser | null> {
+    const user = await this.repository.findOne({ where: { id } });
+    if (!user) {
+      return null;
+    }
+    const updatedUser = await this.repository.save({ ...user, ...userData });
+    return updatedUser as IUser;
   }
 
   async save(user: IUserCreate): Promise<IUser> {
