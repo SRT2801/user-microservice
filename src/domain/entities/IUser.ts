@@ -1,6 +1,10 @@
 export interface IUser {
   id: number;
   name: string;
+  lastName: string;
+  age: number;
+  phone: string;
+  gender: string;
   email: string;
   password: string;
   createdAt: Date;
@@ -12,5 +16,3 @@ export interface IUserCreate
 
 export interface IUserUpdate
   extends Partial<Omit<IUser, "id" | "createdAt" | "updatedAt">> {}
-
-  

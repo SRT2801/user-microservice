@@ -16,7 +16,19 @@ export class User implements IUser {
   name: string;
 
   @Column()
+  lastName: string;
+
+  @Column()
+  age: number;
+
+  @Column()
+  phone: string;
+
+  @Column()
   email: string;
+
+  @Column()
+  gender: string;
 
   @Column()
   password: string;
